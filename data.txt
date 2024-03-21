@@ -1,0 +1,5 @@
+../apple.png
+1974,2085
+PNG
+RGBA
+3.9MB
