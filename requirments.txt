@@ -1,0 +1,4 @@
+moviepy
+pillow
+pillow_heif
+opencv-python
