@@ -1,8 +1,8 @@
 # omni_convert
 
-convert existing image/video files name,resolution,extension, and color mode
+convert existing image/video files name, resolution, extension, and color mode
 
-implemented formats include: png, jpg, jpeg, bmp, WebP, HEIC, gif, tiff, mp4", avi, mov", mkv
+implemented formats include: png, jpg, jpeg, bmp, WebP, HEIC, gif, tiff, mp4, avi, mov, mkv
 
 ### Installing
 
