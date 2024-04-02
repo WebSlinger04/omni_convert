@@ -8,9 +8,12 @@ import omni_image
 import omni_video
 
 def file_exists(file_name):
-    if not os.path.isfile(file_name):
+    if not(os.path.isfile(file_name) or os.path.isdir(file_name)):
         print("File paramater or file doesnt exist")
         sys.exit()
+    if os.path.isdir(file_name):
+        return "Sequence"
+    return "File"
 
 
 def check_extension(file_name):
@@ -42,8 +45,11 @@ def write_inital_data(file_name):
         data.writelines(original_data)
 
 
-def program_options():
-    user_input = input("\nDo you want to info, resize, convert, mode, save, or quit?\n:")
+def program_options(file_type):
+    if file_type == "File":
+        user_input = input("\nDo you want to info, resize, convert, mode, save, or quit?\n:")
+    else:
+        user_input = input("\nDo you want to convert, fps, save, or quit?\n:")
     match user_input.lower():
         case "info":
             omni_image.get_info()
@@ -53,22 +59,27 @@ def program_options():
             omni_image.write_info(2, input("\nChange File extension to\n:"))
         case "mode":
             omni_image.write_info(3, input("\nChange color mode to\n:"))
+        case "fps":
+            omni_image.write_info(4, input("\nChange fps to\n:"))
         case "save":
+            if file_type == "Sequence":
+                omni_video.create_timelapse_video(sys.argv[1])
             try:
                 omni_image.save_image(sys.argv[1])
-            except:
+            except Exception:
                 omni_video.save_video(sys.argv[1])
         case "quit":
             sys.exit()
         case _:
             print("input not understood")
-    program_options()
+    program_options(file_type)
 
 def main():
     register_heif_opener()
-    file_exists(sys.argv[1])
-    check_extension(sys.argv[1])
-    write_inital_data(sys.argv[1])
-    program_options()
+    file_type = file_exists(sys.argv[1])
+    if file_type == "File":
+        check_extension(sys.argv[1])
+        write_inital_data(sys.argv[1])
+    program_options(file_type)
 
 main()
